@@ -1,0 +1,11 @@
+DROP VIEW IF EXISTS avg_movie_ids;
+
+CREATE VIEW avg_movie_ids AS
+SELECT movie_id, count(movie_id) as rating_count, avg(rating) as avg_rating
+FROM ratings
+GROUP by movie_id
+HAVING rating_count > 10
+ORDER by avg_rating DESC;
+
+SELECT movie_names.name, rating_count, avg_rating
+FROM avg_movie_ids JOIN movie_names on movie_names.movie_id = avg_movie_ids.movie_id;
